@@ -17,6 +17,13 @@
 # SPDX-License-Identifier: Apache-2.0
 # License-Filename: LICENSE
 
+env
+sudo ${ANDROID_HOME}/tools/bin/sdkmanager --list
+sudo ${ANDROID_HOME}/tools/bin/sdkmanager --install "ndk;21.3.6528147" --sdk_root=${ANDROID_HOME} > /dev/null
+sudo ${ANDROID_HOME}/tools/bin/sdkmanager --list
+export ANDROID_NDK_HOME=$ANDROID_HOME/ndk/21.3.6528147
+export ANDROID_NDK_ROOT=$ANDROID_HOME/ndk/21.3.6528147
+ls -la $ANDROID_NDK_HOME
 
 mkdir -p build && cd build
 cmake .. -DCMAKE_TOOLCHAIN_FILE="$ANDROID_NDK_HOME/build/cmake/android.toolchain.cmake" \
@@ -29,5 +36,5 @@ cmake .. -DCMAKE_TOOLCHAIN_FILE="$ANDROID_NDK_HOME/build/cmake/android.toolchain
 sudo make install -j$(nproc)
 
 pushd examples/android
-sudo ./gradlew assemble
+  sudo ./gradlew assemble
 popd
